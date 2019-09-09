@@ -7,7 +7,18 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
+
+
+     <view class="form-item">
+            <input class="input" bindinput="bindinputName" placeholder="姓名" value="{{userName}}" auto-focus/>
+        </view>
+        <view class="form-item">
+            <input class="input" bindinput="bindinputPwd" value="{{passWord}}" placeholder="密码"/>
+        </view>
   <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+    <text class="user-motto" bindtap="login"> 登录</text>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto" bindtap="redirect">跳转</text>
   </view>
 </view>

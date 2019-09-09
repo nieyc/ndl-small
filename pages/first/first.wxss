@@ -21,7 +21,7 @@
 }
 
 .search .icon {
-  background: url(http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png) center no-repeat;
+  background: url(http://172.16.2.148/ndl/css/Fsearch2-2fb94833aa.png) center no-repeat;
   background-size: 100%;
   width: 28rpx;
   height: 28rpx;
@@ -97,7 +97,7 @@
 
 .a-section .h .txt {
   padding-right: 30rpx;
-  background: url("http://ac-3yr0g9cz.clouddn.com/2cdba05369e10f934e54.png") right 4rpx no-repeat;
+  /*background: url("http://172.16.2.148/bj.png") right 4rpx no-repeat;*/
   background-size: 16.656rpx 27rpx;
   display: inline-block;
   height: 36rpx;

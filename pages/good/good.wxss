@@ -25,7 +25,7 @@
 }
 
 .service-policy .item {
-  background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/servicePolicyRed-518d32d74b.png) 0 center no-repeat;
+  background: url(http://172.16.2.148/ndl/css/Red-518d32d74b.png) 0 center no-repeat;
   background-size: 10rpx;
   padding-left: 15rpx;
   display: flex;
@@ -93,7 +93,7 @@
   font-size: 25rpx;
   color: #f48f18;
   border-radius: 4px;
-  background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/detailTagArrow-18bee52dab.png) 95% center no-repeat;
+  background: url(http://172.16.2.148/ndl/css/detailTagArrow-18bee52dab.png) 95% center no-repeat;
   background-size: 10.75rpx 18.75rpx;
 }
 
@@ -193,7 +193,7 @@
   width: 164rpx;
   height: 100.5rpx;
   line-height: 100.5rpx;
-  background: url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/address-right-990628faa7.png) right center no-repeat;
+  background: url(http://172.16.2.148/ndl/css/address-right-990628faa7.png) right center no-repeat;
   background-size: 52rpx;
 }
 

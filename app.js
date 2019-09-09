@@ -1,4 +1,23 @@
-//app.js
+/** 
+App({
+  onLaunch: function () {
+    try {
+      this.globalData.userInfo = JSON.parse(wx.getStorageSync('userInfo'));
+      this.globalData.token = wx.getStorageSync('token');
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  globalData: {
+    userInfo: {
+      nickname: '点击登录',
+      avatar: 'http://172.16.2.148/ndl/css/nologin.png'
+    },
+    token: '',
+  }
+})
+**/
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -35,6 +54,10 @@ App({
   },
   globalData: {
     userInfo: null,
-    userName:'liyiwen'
+    userName: 'liyiwen',
+    userInfo124: '',
+    userToken:'',
+    session_key:'',
+    openId:''
   }
 })

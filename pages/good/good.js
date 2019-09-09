@@ -195,7 +195,7 @@ Page({
       console.log("goodId:====="+that.data.id);
       console.log("this.data.number:" + this.data.number);
       wx.request({
-        url: api.carAddUrl,
+        url: api.cartAddUrl,
         method: "POST",
         data: {
           goodId: that.data.id,

@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/auth/login/login",
+    "pages/index/index",
     "pages/first/first",
     "pages/category/category",
     "pages/goods/goods",
@@ -9,8 +11,12 @@
     "pages/catalog/catalog",
     "pages/search/search",
     "pages/wxml/index",
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/shopping/checkout/checkout",
+    "pages/payResult/payResult",
+    "pages/ucenter/order/order",
+    "pages/ucenter/orderDetail/orderDetail"
+    
   ],
   "window": {
     "backgroundTextStyle": "dark",

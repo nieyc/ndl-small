@@ -20,6 +20,10 @@
   <view> view2 </view>
 </block>
 
+<view wx:if="{{status==true}}">
+<view> 变量是true </view>
+</view>
+
 <!--数组迭代 -->
 <view wx:for="{{array}}">
   {{index}}: {{item.message}}
@@ -49,4 +53,19 @@
 <view bindtap="clickMe" hover-class="hover">上证指数</view>
 <view bindtap="getData" hover-class="hover">后台取本地数据</view>
 <view bindtap="jump">跳转首页</view>
+
+      <view class="form-item">
+            <input class="input" bindinput="bindinputName" placeholder="姓名" value="{{userName}}" auto-focus/>
+        </view>
+        <view class="form-item">
+            <input class="input" bindinput="bindinputMobile" value="{{passWord}}" placeholder="密码"/>
+        </view>
+
 <view bindtap="login">登录</view>
+<view bindtap="redirect">返回</view>
+<view bindtap="getUserInfo">获取用户</view>
+
+
+
+
+

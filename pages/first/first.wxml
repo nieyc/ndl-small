@@ -19,7 +19,7 @@
   <!--频道 --> 
 
   <view class="m-menu">
-    <navigator class="item" url="/pages/category/category?id={{item.id}}" wx:for="{{channel}}" wx:key="{{item.id}}">
+    <navigator class="item" url="/pages/category/category?goodTypeId={{item.id}}" wx:for="{{channel}}" wx:key="{{item.id}}">
       <image src="{{item.iconUrl}}" background-size="cover"></image>
       <text>{{item.name}}</text>
     </navigator>

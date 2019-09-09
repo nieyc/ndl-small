@@ -2,18 +2,10 @@
 <view class="container">
    <view class="cate-nav">
         <scroll-view scroll-x="true" class="cate-nav-body" style="width: 750rpx;" scroll-left="{{scrollLeft}}">
-            <view   class="item  {{'active'}}" data-id="{{001}}" data-index="{{1}}" bindtap="switchCate">
-                <view class="name">{{"化肥"}}</view>
+            <view  wx:for="{{navList}}" wx:key="{{item.id}}" class="item {{ goodTypeId == item.id ? 'active' : ''}}" data-id="{{item.id}}" data-index="{{item.sortOrder}}" bindtap="switchCate">
+                <view class="name">{{item.name}}</view>
             </view>
-             <view   class="item  {{''}}" data-id="{{002}}" data-index="{{2}}" bindtap="switchCate">
-                <view class="name">{{"特种肥"}}</view>
-            </view>
-             <view   class="item  {{''}}" data-id="{{003}}" data-index="{{3}}" bindtap="switchCate">
-                <view class="name">{{"农药"}}</view>
-            </view>
-            <view   class="item  {{''}}" data-id="{{004}}" data-index="{{4}}"bindtap="switchCate">
-                <view class="name">{{"卫生用药"}}</view>
-            </view>
+            
         </scroll-view>
     </view>
   
@@ -30,35 +22,18 @@
         </view>-->
         
         <view class="b">
-            <navigator class="item {{'item-b'}}"   url="/pages/good/good?id=1">
-                <image class="img" src="http://yanxuan.nosdn.127.net/87b6a608b99279ebf1764682e9e5fcec.png" background-size="cover"></image>
-                <text class="name">{{'先锋1号'}}</text>
-                <text class="price">￥{{'112'}}</text>
+            <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}"   url="/pages/good/good?id={{good.id}}" wx:for="{{goodList}}" wx:key="{{good.id}}" wx:for-item="good" wx:for-index="iindex">
+                <image class="img" src="{{good.goodExt1}}" background-size="cover"></image>
+                <text class="name">{{good.goodName}}</text>
+                <text class="price">￥{{good.goodPrice}}</text>
             </navigator>
 
-        <navigator class="item"   url="/pages/goods/goods?id=1">
-                <image class="img" src="http://106.15.236.39/ndl/userfiles/fileupload/20190829/1167014723281616898.jpg" background-size="cover"></image>
-                <text class="name">{{'先锋一号'}}</text>
-                <text class="price">￥{{'112'}}</text>
-            </navigator>
 
-      <navigator class="item {{'item-b'}}"   url="/pages/goods/goods?id=1">
-                <image class="img" src="http://yanxuan.nosdn.127.net/1f9e34b1aadd14ea0c9c299c530d86ba.png" background-size="cover"></image>
-                <text class="name">{{'先锋一号'}}</text>
-                <text class="price">￥{{'112'}}</text>
-            </navigator>
 
-        <navigator class="item"   url="/pages/goods/goods?id=1">
-                <image class="img" src="http://106.15.236.39/ndl/userfiles/fileupload/20190901/1168163343869235202.jpg" background-size="cover"></image>
-                <text class="name">{{'先锋一号'}}</text>
-                <text class="price">￥{{'112'}}</text>
-            </navigator>
 
-                  <navigator class="item {{'item-b'}}"   url="/pages/goods/goods?id=1">
-                <image class="img" src="http://yanxuan.nosdn.127.net/1f9e34b1aadd14ea0c9c299c530d86ba.png" background-size="cover"></image>
-                <text class="name">{{'先锋一号'}}</text>
-                <text class="price">￥{{'112'}}</text>
-            </navigator>
+  
+
+               
         </view>
 
              

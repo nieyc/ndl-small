@@ -11,6 +11,8 @@ Page({
     navList: [],
     goodsList: [],
     id: 0,
+    goodTypeId: '',
+    goodPlantTypeId: '',
     currentCategory: {},
     scrollLeft: 0,
     scrollTop: 0,
@@ -24,19 +26,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("option.id:" + options.id);
     // 页面初始化 options为页面跳转所带来的参数
     var that = this;
-    if (options.id) {
+    if (options.goodTypeId) {
       that.setData({
-        //id: parseInt(options.id)
-        id:options.id
+        goodTypeId: options.goodTypeId
       });
     }
 
     wx.getSystemInfo({
       success: function (res) {
-        console.log("aaaaaaaaaaaaaaaaa");
         that.setData({
           scrollHeight: res.windowHeight
         });
@@ -44,7 +43,7 @@ Page({
     });
 
    
-   // this.getCategoryInfo();
+    this.getGoodList();
   },
 
   /**
@@ -94,5 +93,52 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  getGoodList:function(){
+    let that = this;
+    wx.request({
+      url: api.goodListUrl,
+      data: {
+        goodTypeId: that.data.goodTypeId,
+        goodPlantTypeId: that.data.goodPlantTypeId
+      },
+      header: { 'content-type': 'application/json' },
+      success: function (res) {
+        console.log(res.data.data.channel)
+        console.log(res.data.data.goodList)
+        that.setData({
+          navList: res.data.data.channel,
+          goodList: res.data.data.goodList
+        })
+      },
+      fail: function () {
+      }
+
+    });
+
+  },
+  switchCate: function (event) {
+    console.log("this.data.goodTypeId:" + this.data.goodTypeId);
+    console.log("this.data.goodTypeId:" + event.currentTarget.dataset.id);
+    if (this.data.goodTypeId == event.currentTarget.dataset.id) {
+      return false;
+    }
+    var that = this;
+    var clientX = event.detail.x;
+    var currentTarget = event.currentTarget;
+    if (clientX < 60) {
+      that.setData({
+        scrollLeft: currentTarget.offsetLeft - 60
+      });
+    } else if (clientX > 330) {
+      that.setData({
+        scrollLeft: currentTarget.offsetLeft
+      });
+    }
+    this.setData({
+      goodTypeId: event.currentTarget.dataset.id
+    });
+    this.getGoodList();
+
+  },
 })

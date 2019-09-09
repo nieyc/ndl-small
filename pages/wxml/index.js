@@ -1,7 +1,7 @@
 // pages/wxml/index.js
 //const appUrl ="https://www.gtja.com"
 const api = require('../../config/api.js');
-
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -12,6 +12,7 @@ Page({
     name:'nieyc',
     a:'1',
     szzs:'6124',
+    status:false,
     array: [{
       message: 'foo',
     }, {
@@ -22,7 +23,10 @@ Page({
       msg: 'this is a template',
       time: '2016-06-18'
     },
-    enablePullDownRefresh:true
+    enablePullDownRefresh:true,
+    autoCode:'0',
+    userName:'',
+    passWord:''
    
   },
 
@@ -32,8 +36,12 @@ Page({
   onLoad: function (options) {
       console.log("onload ..........")
       //动态改变变量的值
-      this.setData({name:'陈杰'})
+      this.setData({
+        name:'陈杰',
+        status:true
+        })
       this.clickMe();//页面加载的时候调用
+      
   },
 
   /**
@@ -190,14 +198,62 @@ Page({
   })
   },
   login:function(){
+    let that=this;
     wx.login({
       success: function(res){
         console.log("res.code:" + res.code);
         console.log("res.errMsg:" + res.errMsg);
         if(res.errMsg=="login:ok"){
+          console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx:" + res.code)
+            that.setData({
+              name:"nieyachun",
+              autoCode: res.code
+            }),
+          //console.log("yyyyyyyyyyyyyyyyyyyy:" + res.code)
+          console.log("userName:" + that.data.userName)
+          console.log("that.autoCode:" + that.data.autoCode)
+          wx.request({
+            url: 'http://127.0.0.1:8082/account/login',
+            method:"POST",
+            header: { 'content-type': 'application/json' },
+            data:{
+              autoCode: that.data.autoCode
+            },
+             success: function (res) {
+              // 收到https服务成功后返回
+              console.log(res.data)
+              wx.showToast({ title: '请求成功' })
+            },
+          })
           
         }
       }
     })
+  },
+
+  bindinputName: function (event){
+   let userName = this.data.userName;
+    userName = event.detail.value;
+    this.setData({
+      userName: userName
+    });
+  },
+
+  bindinputPwd: function (event) {
+    let pwd = this.data.passWord;
+    pwd = event.detail.value;
+    this.setData({
+      passWord: pwd
+    });
+  },
+  redirect:function(){
+    wx.redirectTo({
+      url: '/pages/index/index',
+    })
+  },
+  getUserInfo:function(){
+    console.log(app.globalData.userInfo124);
+    console.log(app.globalData.token);
+    console.log(app.globalData.openId)
   }
 })

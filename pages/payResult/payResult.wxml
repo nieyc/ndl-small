@@ -1,0 +1,30 @@
+<!--pages/payResult/payResult.wxml-->
+<view class="container">
+  <view class="pay-result">
+
+    <view class="success" wx:if="{{status == 'true'}}">
+      <view class="msg">下单成功</view>
+      <view class="btns">
+        <navigator class="btn" url="/pages/ucenter/order/order" open-type="redirect">查看订单</navigator>
+        <navigator class="btn" url="/pages/first/first" open-type="switchTab">继续逛</navigator>
+      </view>
+    </view>
+
+ 
+    <view class="error" wx:if="{{status != 'true'}}">
+      <view class="msg">下单失败</view>
+      <view class="tips">
+        <view class="p">请在 <text class="time">1小时</text> 内完成付款</view>
+        <view class="p">否则订单将会被系统取消</view>
+      </view>
+      <view class="btns">
+        <navigator class="btn" url="/pages/ucenter/order/order" open-type="redirect">查看订单</navigator> 
+           <navigator class="btn" url="/pages/cart/cart" open-type="switchTab">重新下单</navigator>
+      </view>
+    </view>
+
+    
+
+
+  </view>
+</view>
