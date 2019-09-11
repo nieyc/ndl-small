@@ -6,10 +6,14 @@ const app = getApp();
 Page({
   data: {
     userInfo: {},
-    showLoginDialog: false
+    showLoginDialog: false,
+    token:''
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    console.log("88888888888888888888888888")
+    console.log("token:" + wx.getStorageSync('token'))
+
   },
   onReady: function () {
 
@@ -28,10 +32,21 @@ Page({
   },
 
   onUserInfoClick: function () {
+    var that=this;
+    console.log("token:" + wx.getStorageSync('token'))
     if (wx.getStorageSync('token')) {
+      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhh:" + wx.getStorageSync('token'))
+      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhh:" + app.globalData.userInfo.userName)
+      that.setData({
+        userInfo: app.globalData.userInfo,
+        token: wx.getStorageSync('token')
+      })
 
     } else {
-      this.showLoginDialog();
+     // this.showLoginDialog();
+     wx.redirectTo({
+       url: '/pages/auth/login/login',
+     })
     }
   },
 

@@ -1,6 +1,6 @@
 const gtjaUrl = "https://www.gtja.com";
 const companyUrl ="http://172.16.1.103:8082";
-const mallUrl ="http://127.0.0.1:8082";
+const mallUrl ="http://127.0.0.1:8084";
 
 
 module.exports = {
@@ -16,6 +16,7 @@ module.exports = {
   cartUpdateUrl: mallUrl + '/good/cartUpdate',
   cartDeleteUrl: mallUrl + '/good/cartDelete',
   orderSaverUrl: mallUrl + '/order/saveOrder',
+  orderSingleSaveUrl: mallUrl +'/order/saveSingleOrder',
   orderListUrl:  mallUrl +'/order/list',
   orderDetailUrl: mallUrl +'/order/detail',
   loginUrl: mallUrl + '/account/login'

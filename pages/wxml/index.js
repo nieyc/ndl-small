@@ -1,7 +1,9 @@
 // pages/wxml/index.js
 //const appUrl ="https://www.gtja.com"
 const api = require('../../config/api.js');
+var util = require('../../utils/test.js');
 const app = getApp()
+
 Page({
   /**
    * 页面的初始数据
@@ -252,8 +254,42 @@ Page({
     })
   },
   getUserInfo:function(){
-    console.log(app.globalData.userInfo124);
+    console.log(app.globalData.userInfo);
     console.log(app.globalData.token);
     console.log(app.globalData.openId)
-  }
+  },
+
+  /** 注意：GET方式不能提交json数据，只有POST可以 */
+  getOrderList:function(){
+    let that = this;
+    wx.request({
+      url: api.orderListUrl,
+      //url: api.loginUrl,
+      data: {
+        autoCode: 1111
+      },
+      method: "POST",
+      header: { 'content-type': 'application/json' },
+      success: function (res) {
+        if (res.data.resCode == 0) {
+          console.log("success...................." + res.data.data.orderList)
+         
+        }
+      }
+    })
+  },
+  testPromise:function(){
+    console.log("xxxxxxxxxxxxxxxx:"+util.getTimeStamp());
+    util.request(api.orderListUrl,{autoCode:11111,name:"lixiaohua",age:"30"}).then(function(res){
+      console.log("main result:"+res);
+      console.log("res.resCode"+res.resCode);
+      console.log("res.data:" + res.data.orderList)
+    }).catch(function(err){
+      console.log("err................"+err)
+      console.log("err.errMsg................" + err.errMsg)
+      util.showErrorToast(err.errMsg)
+    })
+  },
+
+
 })

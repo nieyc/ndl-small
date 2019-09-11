@@ -1,16 +1,16 @@
 // pages/good/good.js
 var app = getApp();
 var WxParse = require('../../lib/wxParse/wxParse.js');
-var util = require('../../utils/util.js');
+var util = require('../../utils/test.js');
 var api = require('../../config/api.js');
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     id: 0,
+    goodPrice:0,
     goods: {},
     gallery: [],
     attribute: [],
@@ -45,19 +45,18 @@ Page({
           that.setData({
             goods: res.data.data.info,
             gallery: res.data.data.gallery,
-            attribute:res.data.data.attribute
+            attribute:res.data.data.attribute,
+            goodPrice:res.data.data.info.goodPrice
           });
           console.log("res.data.data.gallery:" + res.data.data.gallery)
           console.log("====" + res.data.data.info.goodDesc)
           WxParse.wxParse('goodsDetail', 'html', res.data.data.info.goodDesc, that);
-        }
-      
-      
-        
+        } 
       },
       fail: function () {
         console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
         // 发生网络错误等情况触发
+        util.showToast("请求异常")
       },
 
       complete: function (res) {
@@ -65,39 +64,7 @@ Page({
       }
     })
   },
-  getGoodsInfoxx: function () {
-    let that = this;
-    util.request(api.GoodsDetail, { id: that.data.id }).then(function (res) {
-      if (res.errno === 0) {
-        that.setData({
-          //goods: res.data.info,
-         // gallery: res.data.gallery,
-          //attribute: res.data.attribute,
-          //issueList: res.data.issue,
-         // comment: res.data.comment,
-         // brand: res.data.brand,
-         // specificationList: res.data.specificationList,
-          //productList: res.data.productList,
-         // userHasCollect: res.data.userHasCollect
-        });
 
-        if (res.data.userHasCollect == 1) {
-          that.setData({
-            'collectBackImage': that.data.hasCollectImage
-          });
-        } else {
-          that.setData({
-            'collectBackImage': that.data.noCollectImage
-          });
-        }
-
-        WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
-
-        that.getGoodsRelated();
-      }
-    });
-
-  },
   switchAttrPop: function () {
     if (this.data.openAttr == false) {
       this.setData({
@@ -117,7 +84,6 @@ Page({
   onLoad: function (options) {
     this.setData({
       id: options.id
-      // id: 1181000
     });
     var that = this;
     this.getGoodsInfo();
@@ -194,46 +160,40 @@ Page({
       //添加到购物车
       console.log("goodId:====="+that.data.id);
       console.log("this.data.number:" + this.data.number);
-      wx.request({
-        url: api.cartAddUrl,
-        method: "POST",
-        data: {
-          goodId: that.data.id,
-          number: this.data.number
-        },
-        header: { 'content-type': 'application/json' },
-        success: function (res) {
-          // 收到https服务成功后返回
-          if (res.data.resCode == 0) {
-            console.log("success..............." + res.data.data.goodsCount)
-            wx.showToast({
-              title: '添加成功'
-            });
-            that.setData({
-              openAttr: !that.data.openAttr,
-              cartGoodsCount: res.data.data.goodsCount
-            });
+      util.request(api.cartAddUrl, {goodId: that.data.id, number: this.data.number}).then(function(res){
+        if (res.resCode == 0) {
+          console.log("success..............." + res.data.goodsCount)
+          wx.showToast({
+            title: '添加成功'
+          });
+          that.setData({
+            openAttr: !that.data.openAttr,
+            cartGoodsCount: res.data.goodsCount
+          });
 
-          } else {
-            wx.showToast({
-              image: '/static/images/icon_error.png',
-              title: _res.errmsg,
-              mask: true
-            });
-          }
-        },
-        fail: function () {
-          console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-          // 发生网络错误等情况触发
-        },
-
-        complete: function (res) {
-
+        } else {
+          wx.showToast({
+            image: '/static/images/icon_error.png',
+            title: res.errMsg,
+            mask: true
+          });
         }
-
       })
   
      }
+    },
+    buy:function(){
+      var that = this;
+      console.log("goodId:" + this.data.id)
+      console.log("this.data.goodPrice:" + that.data.goodPrice);
+
+      util.request(api.orderSingleSaveUrl, { productId: this.data.id, goodAmounts: that.data.goodPrice}).then(function(res){
+        if(res.resCode==0){
+          wx.showToast({
+            title: '添加成功'
+          });
+        }
+      })
     }
 
 

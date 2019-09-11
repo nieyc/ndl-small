@@ -1,36 +1,30 @@
-var util = require('../../../utils/util.js');
+var util = require('../../../utils/test.js');
 var api = require('../../../config/api.js');
-
+var app = getApp();
 Page({
   data: {
-    orderList: []
+    orderList: [],
+    page:1,
+    size:10
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
-
     this.getOrderList();
   },
   getOrderList() {
     let that = this;
-
-    wx.request({
-      url: api.orderListUrl,
-      data: {
-      },
-      method: "GET",
-      header: { 'content-type': 'application/json' },
-      success: function (res) {
-        if (res.data.resCode == 0) {
-          console.log("success...................."+res.data.data.orderList)
-           that.setData({
-            orderList: res.data.data.orderList
-          });
-        }
+    util.request(api.orderListUrl).then(function (res) {
+      console.log("res.data:" + res.data)
+      console.log("res.data.resCode:" + res.resCode)
+      if (res.resCode == 0) {
+        console.log(res.data.orderList);
+        that.setData({
+          orderList: res.data.orderList
+        });
       }
-
-    })
-
+    }); 
   },
+
   payOrder() {
     wx.redirectTo({
       url: '/pages/pay/pay',

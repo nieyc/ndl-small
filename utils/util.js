@@ -77,6 +77,44 @@ function request(url, data = {}, method = "GET") {
   });
 }
 
+
+
+function request1(url, data = {}, method = "GET") {
+  return new Promise(function (resolve, reject) {
+    console.log("data:"+data)
+    console.log("data.page:" + data.page)
+    console.log("url:" + url)
+    console.log("method:" + method)
+    wx.request({
+      url: url,
+      data: data,
+      method: method,
+      header: {
+        'Content-Type': 'application/json',
+        'X-ndl-Token': wx.getStorageSync('token')
+      },
+      success: function (res) {
+        if (res.data.resCode == 0) {
+            console.log("i am here................");
+            resolve(res.data);
+        }else if(res.data.resCode==-1){
+          console.log("用户未登录")
+          wx.redirectTo({
+            url: '/pages/auth/login/login',
+          })
+        } else {
+          console.log("res.data.resMsg:" + res.data.resMsg)
+          reject(res.data.resMsg);
+        }
+      },
+      fail: function (err) {
+        reject(err)
+        console.log("failed")
+      }
+    })
+  });
+}
+
 function get(url, data = {}) {
   return request(url, data, 'GET')
 }
@@ -105,11 +143,14 @@ function checkSession() {
  * 调用微信登录
  */
 function login() {
+  console.log("9999999999999999999")
   return new Promise(function (resolve, reject) {
     wx.login({
       success: function (res) {
+        console.log("res.code=="+res.code)
         if (res.code) {
-          resolve(res.code);
+          console.log("i am here ..............")
+           resolve(res.code);
         } else {
           reject(res);
         }
@@ -126,6 +167,8 @@ function getUserInfo() {
     wx.getUserInfo({
       withCredentials: true,
       success: function (res) {
+        console.log("why?" + res)
+        console.log("why.msg?" + res.detail)
         if (res.detail.errMsg === 'getUserInfo:ok') {
           resolve(res);
         } else {
@@ -164,6 +207,7 @@ function showErrorToast(msg) {
 module.exports = {
   formatTime,
   request,
+  request1,
   get,
   post,
   redirect,

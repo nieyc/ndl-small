@@ -54,7 +54,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    userName: 'liyiwen',
+    userName: 'xiaohua',
     userInfo124: '',
     userToken:'',
     session_key:'',

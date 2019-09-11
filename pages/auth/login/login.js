@@ -5,7 +5,8 @@ Page({
     username: '',
     password: '',
     code: '',
-    loginErrorCount: 0
+    loginErrorCount: 0,
+    autoCode:''
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -28,7 +29,6 @@ Page({
   },
   startLogin: function () {
     var that = this;
-
     if (that.data.password.length < 1 || that.data.username.length < 1) {
       wx.showModal({
         title: '错误信息',
@@ -38,33 +38,57 @@ Page({
       return false;
     }
 
-    wx.request({
-      url: api.loginUrl,
-      data: {
-        userName: that.data.username,
-        passWord: that.data.password
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/json'
-      },
+    wx.login({
       success: function (res) {
-        if (res.data.code == 200) {
-          that.setData({
-            'loginErrorCount': 0
-          });
-          wx.setStorage({
-            key: "token",
-            data: res.data.data.token,
-            success: function () {
-              wx.switchTab({
-                url: '/pages/ucenter/index/index'
-              });
+        console.log("res.code:" + res.code);
+        console.log("res.errMsg:" + res.errMsg);
+        if (res.errMsg == "login:ok") {
+           console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx:" + res.code)
+           that.setData({
+            autoCode: res.code
+          }),
+          console.log("that.autoCode:" + that.data.autoCode)
+
+          wx.request({
+            url: api.loginUrl,
+            data: {
+              userName: that.data.username,
+              passWord: that.data.password,
+              autoCode: that.data.autoCode
+            },
+            method: 'POST',
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              if (res.data.resCode == 0) {
+                app.globalData.userInfo = res.data.userInfo
+                that.setData({
+                  'loginErrorCount': 0
+                });
+                wx.setStorage({
+                  key: "token",
+                  data: res.data.sessionKey,
+                  success: function () {
+                    wx.switchTab({
+                      url: '/pages/ucenter/index/index'
+                    });
+                  }
+                });
+              } else {
+                wx.showModal({
+                  title: '错误信息',
+                  content: res.data.resMsg,
+                  showCancel: false
+                });
+                return false;
+              }
             }
           });
         }
       }
-    });
+    })
+
   },
   bindUsernameInput: function (e) {
     this.setData({

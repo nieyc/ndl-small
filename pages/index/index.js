@@ -100,7 +100,7 @@ Page({
               console.log(res.data)
               if(res.data.resCode==0){
                 wx.showToast({ title: '请求成功' })
-                console.log("liyiwen:" + res.data.userInfo)
+                console.log("0000000000:" + res.data.userInfo)
                 app.globalData.userInfo124=res.data.userInfo
                 app.globalData.session_key=res.data.session_key
                 app.globalData.token=res.data.token
